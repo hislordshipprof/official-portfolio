@@ -19,11 +19,11 @@ import typescript from "../assets/typescript.png";
 import vue from "../assets/vue.png";
 
 import about01 from "../assets/about01.png";
-import about02 from "../assets/about02.png";
+import abouts02 from "../assets/abouts02.png";
 import about03 from "../assets/about03.png";
 import about04 from "../assets/about04.png";
 
-import profile from "../assets/profile.png";
+import profiles from "../assets/profiles.jpg";
 import circle from "../assets/circle.svg";
 import logo from "../assets/HA.png";
 
@@ -56,10 +56,10 @@ export default {
   typescript,
   vue,
   about01,
-  about02,
+  abouts02,
   about03,
   about04,
-  profile,
+  profiles,
   circle,
   logo,
   adidas,

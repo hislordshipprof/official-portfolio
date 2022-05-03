@@ -3,6 +3,7 @@ import {About,Skills,Work,Testimonial,Header,Footer} from './container'
 
 import Navbar from './components/Navbar/Navbar';
 import "./App.scss";
+import Abouts from './container/About/Abouts';
 function App() {
   return (
     <div className="app">
@@ -13,6 +14,7 @@ function App() {
       <Skills />
 
       <Testimonial />
+      <Abouts />
       <Footer />
     </div>
   );
