@@ -5,7 +5,14 @@
   },
   "api": {
     "projectId": "l3wd7476",
-    "dataset": "production"
+    "dataset": "production",
+    "cors": {
+      "origins": [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:3333"
+      ]
+    }
   },
   "plugins": [
     "@sanity/base",

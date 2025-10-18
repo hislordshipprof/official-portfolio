@@ -1,21 +1,21 @@
 export default {
-    name:'workExperience',
-    title:'Work Experience',
+    name:'education',
+    title:'Education',
     type:'document',
     fields:[
         {
-            name:'position',
-            title:'Position',
+            name:'institution',
+            title:'Institution',
             type:'string'
         },
         {
-            name:'company',
-            title:'Company',
+            name:'degree',
+            title:'Degree',
             type:'string'
         },
         {
-            name:'location',
-            title:'Location',
+            name:'field',
+            title:'Field of Study',
             type:'string'
         },
         {
@@ -29,22 +29,26 @@ export default {
             type:'date'
         },
         {
-            name:'responsibilities',
-            title:'Responsibilities',
-            type:'array',
-            of: [{type: 'string'}]
+            name:'gpa',
+            title:'GPA',
+            type:'string'
         },
         {
-            name:'technologies',
-            title:'Technologies Used',
+            name:'coursework',
+            title:'Relevant Coursework',
             type:'array',
             of: [{type: 'string'}]
         },
         {
             name:'achievements',
-            title:'Key Achievements',
+            title:'Achievements',
             type:'array',
             of: [{type: 'string'}]
+        },
+        {
+            name:'location',
+            title:'Location',
+            type:'string'
         }
     ]
 }
