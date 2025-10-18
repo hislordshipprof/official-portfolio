@@ -11,16 +11,43 @@ const Skills = () => {
   const [skills, setSkills] = useState([]);
 
   useEffect(() => {
+    let isMounted = true; // Flag to track if component is mounted
+
     const query = '*[_type == "experiences"]';
     const skillsQuery = '*[_type == "skills"]';
 
-    client.fetch(query).then((data) => {
-      setExperiences(data);
-    });
+    console.log('🔍 Skills Component - Fetching experiences...');
+    client.fetch(query)
+      .then((data) => {
+        if (isMounted) {
+          console.log('✅ Experiences Data Success:', data);
+          setExperiences(data);
+        }
+      })
+      .catch((error) => {
+        if (isMounted) {
+          console.log('❌ Experiences Data Error:', error);
+        }
+      });
 
-    client.fetch(skillsQuery).then((data) => {
-      setSkills(data);
-    });
+    console.log('🔍 Skills Component - Fetching skills...');
+    client.fetch(skillsQuery)
+      .then((data) => {
+        if (isMounted) {
+          console.log('✅ Skills Data Success:', data);
+          setSkills(data);
+        }
+      })
+      .catch((error) => {
+        if (isMounted) {
+          console.log('❌ Skills Data Error:', error);
+        }
+      });
+
+    // Cleanup function to prevent memory leaks
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
@@ -40,7 +67,13 @@ const Skills = () => {
                 className="app__flex"
                 style={{ backgroundColor: skill.bgColor }}
               >
-                <img src={urlFor(skill.icon)} alt={skill.name} />
+                {skill.icon ? (
+                  <img src={urlFor(skill.icon)} alt={skill.name} />
+                ) : (
+                  <div className="skill-text-icon">
+                    {skill.name.charAt(0).toUpperCase()}
+                  </div>
+                )}
               </div>
               <p className="p-text">{skill.name}</p>
             </motion.div>

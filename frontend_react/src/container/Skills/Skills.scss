@@ -52,6 +52,17 @@
       height: 50%;
     }
 
+    .skill-text-icon {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--secondary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+
     &:hover {
       box-shadow: 0 0 25px #fef4f5;
     }

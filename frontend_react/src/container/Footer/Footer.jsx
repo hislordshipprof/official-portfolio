@@ -4,7 +4,17 @@ import { images } from "../../constants";
 import { AppWrap, MotionWrap } from "../../wrapper";
 import { client } from "../../clients";
 import "./Footer.scss";
-
+import { motion } from 'framer-motion';
+import { 
+  FaRocket, 
+  FaAward, 
+  FaChartLine, 
+  FaClock,
+  FaUsers,
+  FaServer,
+  FaShieldAlt,
+  FaMobile
+} from 'react-icons/fa';
 const Footer = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -42,19 +52,38 @@ const Footer = () => {
 
   return (
     <>
+         {/* Call to Action */}
+         <motion.div 
+          className="metrics-cta"
+          whileInView={{ opacity: [0, 1], y: [20, 0] }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
+          <div className="cta-content">
+            <h3>Ready to Drive Results?</h3>
+            <p>Let's build something impactful together and create measurable value for your business.</p>
+            <motion.button
+              className="cta-button"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span>Let's Collaborate</span>
+              <FaRocket className="cta-icon" />
+            </motion.button>
+          </div>
+        </motion.div>
       <h2 className="head-text">Take a coffee & chat with me</h2>
 
       <div className="app__footer-cards">
         <div className="app__footer-card ">
           <img src={images.email} alt="email" />
-          <a href="mailto:hello@profdjango.com" className="p-text">
-            hello@profdjango.com
+          <a href="mailto:hello@beagyekum" className="p-text">
+            beagyekum21@gmail.com
           </a>
         </div>
         <div className="app__footer-card">
           <img src={images.mobile} alt="phone" />
           <a href="tel:+1 (123) 456-7890" className="p-text">
-            +233 (24) 80-83847
+            +19703910990
           </a>
         </div>
       </div>

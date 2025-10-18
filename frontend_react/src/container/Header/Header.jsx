@@ -58,6 +58,7 @@ const Header = () => {
                 <div className="i-title-item">Web Developer</div>
                 <div className="i-title-item">UI/UX Designer</div>
               </div>
+
             </div>
           </div>
           <div className="tag-cmp app__flex">
@@ -103,4 +104,4 @@ const Header = () => {
   );
 }
 
-export default AppWrap(Header,'home');
+export default AppWrap(Header,'home')

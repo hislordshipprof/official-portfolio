@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { urlFor,client } from "../../clients";
+import { images } from "../../constants";
 import "./About.scss";
-// import {images} from '../../constants'
 
 import { AppWrap, MotionWrap } from '../../wrapper';
 // const Abouts= [
@@ -13,34 +13,47 @@ import { AppWrap, MotionWrap } from '../../wrapper';
 
 // ]
 
-//urlFor
 const About = () => {
-   const [abouts, setAbouts] = useState([]);
-
-  useEffect(() => {
-    const query = '*[_type == "abouts"]';
-
-    client.fetch(query).then((data) => {
-      setAbouts(data);
-    });
-  }, []);
+  // Professional journey data with actual images
+  const professionalJourney = [
+    {
+      title: 'Full-Stack Engineer',
+      description: 'Frontend-focused software engineer with extensive experience in crafting engaging user interfaces using React and optimizing performance for large-scale applications.',
+      imgUrl: images.fullStackImage
+    },
+    {
+      title: 'DevSecOps Engineer', 
+      description: 'Expert in secure infrastructure automation, CI/CD pipelines, and cloud security best practices, ensuring robust and scalable deployment architectures.',
+      imgUrl: images.devSecOpsImage
+    },
+    {
+      title: 'AI/ML Developer',
+      description: 'Specialized in integrating AI and machine learning solutions into web applications, with expertise in OpenAI APIs, natural language processing, and intelligent user interfaces.',
+      imgUrl: images.aiDeveloperImage
+    },
+    {
+      title: 'EdTech Specialist',
+      description: 'Passionate about leveraging technology to enhance learning experiences, building AI-powered educational platforms that improve student engagement and comprehension.',
+      imgUrl: images.edTechImage
+    }
+  ];
 
   return (
     <>
       <h2 className="head-text">My Journey <span>As a </span> <br />Software  <span>Developer</span></h2>
 
       <div className="app__profiles">
-        {abouts.map((about, index) => (
+        {professionalJourney.map((role, index) => (
           <motion.div
             whileInView={{ opacity: 1 }}
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.5, type: 'tween' }}
             className="app__profile-item"
-            key={about.title + index}
+            key={role.title + index}
           >
-            <img src={urlFor(about.imgUrl)} alt={about.title} />
-            <h2 className="bold-text" style={{ marginTop: 20 }}>{about.title}</h2>
-            <p className="p-text" style={{ marginTop: 10 }}>{about.description}</p>
+            <img src={role.imgUrl} alt={role.title} className="professional-journey-image" />
+            <h2 className="bold-text" style={{ marginTop: 20 }}>{role.title}</h2>
+            <p className="p-text" style={{ marginTop: 10 }}>{role.description}</p>
           </motion.div>
         ))}
       </div>

@@ -24,8 +24,15 @@ import about03 from "../assets/about03.png";
 import about04 from "../assets/about04.png";
 
 import profiles from "../assets/profiles.jpg";
+import profilePhoto from "../assets/projectImg/me.jpg";
 import circle from "../assets/circle.svg";
 import logo from "../assets/HA.png";
+
+// Professional Journey Images
+import devSecOpsImage from "../assets/projectImg/DevSecOps Engineer at Work.png";
+import aiDeveloperImage from "../assets/projectImg/AI Developer with Circuitry Design.png";
+import fullStackImage from "../assets/projectImg/Full-Stack Engineer Digital Workspace.png";
+import edTechImage from "../assets/projectImg/EdTech Specialist Concept Illustration.png";
 
 import adidas from "../assets/adidas.png";
 import amazon from "../assets/amazon.png";
@@ -34,6 +41,7 @@ import bolt from "../assets/bolt.png";
 import nb from "../assets/nb.png";
 import skype from "../assets/skype.png";
 import spotify from "../assets/spotify.png";
+
 
 export default {
   email,
@@ -60,8 +68,14 @@ export default {
   about03,
   about04,
   profiles,
+  profilePhoto,
   circle,
   logo,
+  // Professional Journey Images
+  devSecOpsImage,
+  aiDeveloperImage,
+  fullStackImage,
+  edTechImage,
   adidas,
   amazon,
   asus,

@@ -16,32 +16,62 @@ const Testimonial = () => {
   };
 
   useEffect(() => {
+    let isMounted = true; // Flag to track if component is mounted
+    
     const query = '*[_type == "testimonials"]';
     const brandsQuery = '*[_type == "brands"]';
 
-    client.fetch(query).then((data) => {
-      setTestimonials(data);
-    });
+    console.log('🔍 Testimonial Component - Fetching testimonials...');
+    client.fetch(query)
+      .then((data) => {
+        if (isMounted) {
+          console.log('✅ Testimonials Data Success:', data);
+          setTestimonials(data || []);
+          setCurrentIndex(0); // Reset index when data loads
+        }
+      })
+      .catch((error) => {
+        if (isMounted) {
+          console.log('❌ Testimonials Data Error:', error);
+          setTestimonials([]);
+        }
+      });
 
-    client.fetch(brandsQuery).then((data) => {
-      setBrands(data);
-    });
+    console.log('🔍 Testimonial Component - Fetching brands...');
+    client.fetch(brandsQuery)
+      .then((data) => {
+        if (isMounted) {
+          console.log('✅ Brands Data Success:', data);
+          setBrands(data || []);
+        }
+      })
+      .catch((error) => {
+        if (isMounted) {
+          console.log('❌ Brands Data Error:', error);
+          setBrands([]);
+        }
+      });
+
+    // Cleanup function to prevent memory leaks
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
     <>
-      {testimonials.length && (
+      {testimonials && testimonials.length > 0 && (
         <>
           <div className="app__testimonial-item app__flex">
             <img
-              src={urlFor(testimonials[currentIndex].imageurl)}
-              alt={testimonials[currentIndex].name}
+              src={testimonials[currentIndex]?.imageurl ? urlFor(testimonials[currentIndex].imageurl) : ''}
+              alt={testimonials[currentIndex]?.name || 'Testimonial'}
             />
             <div className="app__testimonial-content">
-              <p className="p-text">{testimonials[currentIndex].feedback}</p>
+              <p className="p-text">{testimonials[currentIndex]?.feedback || 'No feedback available'}</p>
               <div>
-                <h4 className="bold-text">{testimonials[currentIndex].name}</h4>
-                <h5 className="p-text">{testimonials[currentIndex].company}</h5>
+                <h4 className="bold-text">{testimonials[currentIndex]?.name || 'Anonymous'}</h4>
+                <h5 className="p-text">{testimonials[currentIndex]?.company || 'Unknown Company'}</h5>
               </div>
             </div>
           </div>
@@ -83,7 +113,13 @@ const Testimonial = () => {
             transition={{ duration: 0.5, type: "tween" }}
             key={brand._id}
           >
-            <img src={urlFor(brand.imgUrl)} alt={brand.name} />
+            {brand.imgUrl ? (
+              <img src={urlFor(brand.imgUrl)} alt={brand.name} />
+            ) : (
+              <div className="brand-placeholder-icon">
+                {brand.name ? brand.name.charAt(0).toUpperCase() : 'B'}
+              </div>
+            )}
           </motion.div>
         ))}
       </div>
