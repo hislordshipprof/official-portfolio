@@ -4,7 +4,7 @@
   # Build settings
   base = "frontend_react"
   command = "npm run build"
-  publish = "frontend_react/build"
+  publish = "build"
 
 # Environment variables (set these in Netlify dashboard)
 # REACT_APP_SANITY_PROJECT_ID = "your_project_id"
