@@ -1,0 +1,13 @@
+# Netlify redirects file for Single Page Application
+# This handles client-side routing for React Router
+
+# Redirect all traffic to index.html for SPA routing
+/*    /index.html   200
+
+# Optional: Redirect common paths
+/home             /           301
+/portfolio        /#work      301
+/contact          /#contact   301
+
+# API redirects (if needed for future API calls)
+/api/*  https://your-api-domain.com/api/:splat  200

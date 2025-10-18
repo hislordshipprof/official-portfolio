@@ -128,6 +128,16 @@ REACT_APP_SANITY_TOKEN=your_sanity_token_here
 - Never expose tokens in client-side code
 - Use read-only tokens when possible
 
+## 🔒 Git Security
+
+The project uses multiple `.gitignore` files to ensure sensitive data and dependencies are never committed:
+
+- **Root `.gitignore`** - Project-wide ignores (node_modules, .env files, OS files)
+- **Frontend `.gitignore`** - React-specific ignores (build/, coverage/, etc.)
+- **Backend `.gitignore`** - Sanity-specific ignores (.sanity/, dist/, etc.)
+
+This ensures `node_modules` and environment files are ignored in **both** frontend and backend directories.
+
 ## 📁 Project Structure
 
 ```
@@ -214,10 +224,28 @@ official-portfolio/
 
 ## 🚀 Deployment
 
-### **Frontend Deployment (Vercel)**
+### **Frontend Deployment (Netlify)**
+1. **Connect Repository**: Link your GitHub repository to Netlify
+2. **Configure Build Settings** (or use the included `netlify.toml`):
+   ```
+   Base directory: frontend_react
+   Build command: npm run build
+   Publish directory: build
+   ```
+3. **Set Environment Variables** in Netlify dashboard:
+   ```
+   REACT_APP_SANITY_PROJECT_ID = your_project_id
+   REACT_APP_SANITY_DATASET = production  
+   REACT_APP_SANITY_API_VERSION = 2022-02-01
+   REACT_APP_SANITY_TOKEN = your_token
+   ```
+4. **Deploy**: Automatic CI/CD on push to main branch
+
+### **Alternative: Vercel Deployment**
 1. Connect your GitHub repository to Vercel
-2. Configure environment variables in Vercel dashboard
-3. Deploy with automatic CI/CD on push to main branch
+2. Set framework preset to "Create React App"
+3. Set root directory to `frontend_react`
+4. Configure environment variables in Vercel dashboard
 
 ### **Backend Deployment (Sanity Cloud)**
 1. Deploy Sanity Studio: `sanity deploy`

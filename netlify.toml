@@ -1,0 +1,75 @@
+# Netlify configuration file for Benjamin's Portfolio
+
+[build]
+  # Build settings
+  base = "frontend_react"
+  command = "npm run build"
+  publish = "frontend_react/build"
+
+# Environment variables (set these in Netlify dashboard)
+# REACT_APP_SANITY_PROJECT_ID = "your_project_id"
+# REACT_APP_SANITY_DATASET = "production"
+# REACT_APP_SANITY_API_VERSION = "2022-02-01"
+# REACT_APP_SANITY_TOKEN = "your_token"
+
+[build.environment]
+  # Node version
+  NODE_VERSION = "18"
+  # Install dependencies with legacy peer deps (if needed)
+  NPM_FLAGS = "--legacy-peer-deps"
+
+# SPA routing configuration
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Optional: Redirect common paths
+[[redirects]]
+  from = "/home"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/portfolio"
+  to = "/#work"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/#contact"
+  status = 301
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Security headers
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+    # Cache static assets
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    # Don't cache HTML files
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/resume/*"
+  [headers.values]
+    # Cache PDF files
+    Cache-Control = "public, max-age=86400"
+    Content-Type = "application/pdf"
+
+# Preview deployment settings
+[context.branch-deploy]
+  command = "npm run build"
+
+# Production deployment settings  
+[context.production]
+  command = "npm run build && echo 'Portfolio deployed successfully!'"
