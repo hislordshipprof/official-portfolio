@@ -9,6 +9,8 @@ import './SkillsRadar.scss';
 
 const SkillsRadar = () => {
   const canvasRef = useRef(null);
+  const chartContainerRef = useRef(null);
+  const [canvasSize, setCanvasSize] = useState(470);
   const [selectedSkill, setSelectedSkill] = useState(null);
   const [animationProgress, setAnimationProgress] = useState(0);
 
@@ -25,6 +27,21 @@ const SkillsRadar = () => {
     { name: 'DevOps/Docker', level: 82, icon: <FaDocker />, color: '#2496ed', category: 'DevOps & Deployment' },
     { name: 'React Native', level: 78, icon: <HiDeviceMobile />, color: '#61dafb', category: 'Mobile Development' },
   ];
+
+  // Resize canvas based on container / viewport
+  useEffect(() => {
+    const computeSize = () => {
+      const viewport = window.innerWidth;
+      if (viewport >= 1200) return 460;
+      if (viewport >= 768) return 400;
+      return 320;
+    };
+
+    const update = () => setCanvasSize(computeSize());
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
 
   // Animation effect
   useEffect(() => {
@@ -55,6 +72,9 @@ const SkillsRadar = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    // Ensure current canvas size is applied
+    canvas.width = canvasSize;
+    canvas.height = canvasSize;
 
     const ctx = canvas.getContext('2d');
     const centerX = canvas.width / 2;
@@ -165,8 +185,8 @@ const SkillsRadar = () => {
         >
           <canvas
             ref={canvasRef}
-            width={400}
-            height={400}
+            width={canvasSize}
+            height={canvasSize}
             className="radar-canvas"
           />
           
@@ -175,11 +195,17 @@ const SkillsRadar = () => {
             {skills.map((skill, index) => {
               const angleStep = (2 * Math.PI) / skills.length;
               const angle = index * angleStep - Math.PI / 2;
-              const labelRadius = 220; // Distance from center for labels
-              
-              const x = 200 + Math.cos(angle) * labelRadius;
-              const y = 200 + Math.sin(angle) * labelRadius;
-              
+              // Dynamically compute a radius that keeps labels inside the container
+              const currentSize = canvasRef.current ? canvasRef.current.width : canvasSize;
+              const baseRadius = currentSize / 2;
+              // Half label width estimate (tuned for mobile so labels don't clip)
+              const halfLabel = window.innerWidth <= 480 ? 56 : 72;
+              // Keep labels fully inside the circular container bounds
+              const labelRadius = Math.max(0, baseRadius - halfLabel);
+
+              const x = baseRadius + Math.cos(angle) * labelRadius;
+              const y = baseRadius + Math.sin(angle) * labelRadius;
+
               return (
                 <motion.div
                   key={skill.name}

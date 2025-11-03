@@ -114,15 +114,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: visible; // allow labels to render fully if close to edge
+  z-index: 2;        // ensure it sits above the legend background
+  margin-bottom: 3rem; // provide space for labels at the bottom so next card won't overlap
   
+  @media screen and (min-width: 1200px) {
+    width: 460px;
+    height: 460px;
+  }
+
   @media screen and (max-width: 480px) {
     width: 320px;
     height: 320px;
+    margin-bottom: 4rem; // extra space on small screens
   }
 }
 
 .radar-canvas {
   border-radius: 50%;
+  width: 100%;
+  height: 100%;
   
   @media screen and (max-width: 480px) {
     width: 320px;
@@ -149,7 +160,7 @@
   pointer-events: all;
   cursor: pointer;
   transition: all 0.3s ease;
-  padding: 0.5rem;
+  padding: 0.4rem 0.4rem;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
@@ -189,15 +200,17 @@
   }
   
   @media screen and (max-width: 480px) {
-    min-width: 60px;
-    padding: 0.375rem;
+    min-width: 56px;
+    max-width: 90px;
+    padding: 0.3rem 0.4rem;
     
     .skill-icon {
       font-size: 1.2rem;
     }
     
     .skill-name {
-      font-size: 0.65rem;
+      font-size: 0.6rem;
+      white-space: nowrap;
     }
     
     .skill-level {
@@ -220,6 +233,7 @@
   width: 100%;
   min-width: 450px;
   position: relative;
+  z-index: 1; // keep under the radar labels
   
   // Ensure full coverage
   &::before {
