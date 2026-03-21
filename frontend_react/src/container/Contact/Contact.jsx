@@ -29,17 +29,17 @@ const Contact = () => {
               <div><div className="c-lb">Phone</div><div className="c-val">+1 970 391 0990</div></div>
             </div>
             <div className="c-links">
-              <a href="#" className="c-lnk">
+              <a href="/resume/Benjamin_Agyekum_Resume.pdf" download className="c-lnk">
                 <span className="c-lnk-ico">📄</span>
                 <div><div className="c-lnk-name">Download Resume</div><div className="c-lnk-sub">View full experience</div></div>
                 <span className="c-arr">→</span>
               </a>
-              <a href="https://github.com" target="_blank" rel="noreferrer" className="c-lnk">
+              <a href="https://github.com/hislordshipprof" target="_blank" rel="noreferrer" className="c-lnk">
                 <span className="c-lnk-ico">⌨️</span>
                 <div><div className="c-lnk-name">GitHub — 66 Public Repos</div><div className="c-lnk-sub">Explore my repositories</div></div>
                 <span className="c-arr">→</span>
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="c-lnk">
+              <a href="https://www.linkedin.com/in/bagyekum" target="_blank" rel="noreferrer" className="c-lnk">
                 <span className="c-lnk-ico">💼</span>
                 <div><div className="c-lnk-name">LinkedIn Profile</div><div className="c-lnk-sub">Connect professionally</div></div>
                 <span className="c-arr">→</span>
