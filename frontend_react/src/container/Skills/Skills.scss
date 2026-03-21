@@ -1,168 +1,53 @@
-.app__skills {
-  flex: 1;
-  width: 100%;
-  flex-direction: column;
+/* ======================================
+   SKILLS — DARK SECTION
+   ====================================== */
+#skills{
+  background:var(--ink);padding:112px 0;
+  .s-label{color:rgba(255,255,255,.35);
+    &::before{background:rgba(255,255,255,.2)}
+  }
+  .s-head{color:#fff;
+    em{color:#6EE7B7}
+  }
+  .s-body{color:rgba(255,255,255,.45)}
 }
 
-.app__skills-container {
-  width: 80%;
-  margin-top: 3rem;
+.sk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:52px}
 
-  display: flex;
-  flex-direction: row;
-
-  @media screen and (max-width: 900px) {
-    width: 100%;
-    flex-direction: column;
+.sk-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--r3);padding:32px 28px;
+  transition:border-color .3s,transform .3s var(--ease),box-shadow .3s;
+  position:relative;overflow:hidden;
+  &::after{
+    content:'';position:absolute;inset:0;border-radius:inherit;
+    background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(5,150,105,.07) 0%,transparent 65%);
+    opacity:0;transition:opacity .4s;pointer-events:none;
   }
+  &:hover{border-color:rgba(110,231,183,.25);transform:translateY(-5px);box-shadow:0 24px 52px rgba(0,0,0,.35)}
+  &:hover::after{opacity:1}
 }
 
-.app__skills-list {
-  flex: 1;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-
-  margin-right: 5rem;
-
-  @media screen and (max-width: 900px) {
-    margin-right: 0;
-    justify-content: center;
-    align-items: center;
-  }
+.sk-icon{font-size:28px;margin-bottom:16px}
+.sk-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:700;color:#fff;margin-bottom:4px;letter-spacing:-.01em;
+}
+.sk-sub{font-size:12px;color:rgba(255,255,255,.3);margin-bottom:24px}
+.sk-bars{display:flex;flex-direction:column;gap:14px}
+.sbl{
+  display:flex;justify-content:space-between;
+  font-size:12.5px;font-weight:500;color:rgba(255,255,255,.55);margin-bottom:6px;
+  span{font-family:'DM Mono',monospace;font-size:11px;color:#6EE7B7}
+}
+.sb-track{height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.sb-fill{
+  height:100%;width:0;border-radius:2px;
+  background:linear-gradient(90deg,#059669,#6EE7B7);
+  transition:width 1.4s cubic-bezier(.25,1,.5,1);
 }
 
-.app__skills-item {
-  flex-direction: column;
-  text-align: center;
-
-  margin: 1rem;
-
-  transition: all 0.3s ease-in-out;
-
-  div {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    background-color: #fef4f5;
-
-    img {
-      width: 50%;
-      height: 50%;
-    }
-
-    .skill-text-icon {
-      font-size: 2rem;
-      font-weight: bold;
-      color: var(--secondary-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-    }
-
-    &:hover {
-      box-shadow: 0 0 25px #fef4f5;
-    }
-
-    @media screen and (min-width: 2000px) {
-      width: 150px;
-      height: 150px;
-    }
-
-    @media screen and (max-width: 450px) {
-      width: 70px;
-      height: 70px;
-    }
-  }
-
-  p {
-    font-weight: 500;
-    margin-top: 0.5rem;
-  }
-
-  @media screen and (min-width: 2000px) {
-    margin: 1rem 2rem;
-
-    p {
-      margin-top: 1rem;
-    }
-  }
-}
-
-.app__skills-exp {
-  flex: 1;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-direction: column;
-
-  @media screen and (max-width: 900px) {
-    margin-top: 2rem;
-  }
-}
-
-.app__skills-exp-item {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin: 1rem 0;
-}
-
-.app__skills-exp-works {
-  flex: 1;
-
-  .app__skills-exp-work {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-    cursor: pointer;
-
-    h4 {
-      font-weight: 500;
-    }
-
-    p {
-      font-weight: 400;
-      color: var(--gray-color);
-      margin-top: 5px;
-    }
-  }
-}
-
-.app__skills-exp-year {
-  margin-right: 3rem;
-
-  p {
-    font-weight: 800;
-    color: var(--secondary-color);
-  }
-
-  @media screen and (max-width: 450px) {
-    margin-right: 1rem;
-  }
-}
-
-.skills-tooltip {
-  max-width: 300px !important;
-  background-color: var(--white-color) !important;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1) !important;
-  border-radius: 5px !important;
-  padding: 1rem !important;
-  color: var(--gray-color) !important;
-  text-align: center !important;
-  line-height: 1.5 !important;
-  opacity: 1 !important;
-
-  @media screen and (min-width: 2000px) {
-    font-size: 1.75rem !important;
-    max-width: 500px !important;
-    line-height: 2 !important;
-  }
+@media(max-width:1024px){
+  .sk-grid{grid-template-columns:1fr}
 }

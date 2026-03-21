@@ -1,57 +1,115 @@
-.app__about {
-  flex: 1;
-  width: 100%;
-  flex-direction: column;
+/* ======================================
+   ABOUT — BENTO GRID
+   ====================================== */
+#about{background:var(--parchment2)}
+
+.bento{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:12px;margin-top:56px;
+}
+.bc{
+  background:var(--white);
+  border:1px solid var(--parchment3);
+  border-radius:var(--r3);padding:34px;
+  transition:border-color .3s,transform .3s var(--ease),box-shadow .3s;
+  position:relative;overflow:hidden;
+  &:hover{border-color:rgba(5,150,105,.25);transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.07)}
+  &::before{
+    content:'';position:absolute;inset:0;border-radius:inherit;
+    background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(5,150,105,.04) 0%,transparent 65%);
+    opacity:0;transition:opacity .4s;pointer-events:none;
+  }
+  &:hover::before{opacity:1}
 }
 
-.app__profiles {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  margin-top: 2rem;
+/* Column spans */
+.bc-bio   {grid-column:span 7}
+.bc-card  {grid-column:span 5}
+.bc-role  {grid-column:span 3}
+.bc-stat  {grid-column:span 3;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.bc-testi {grid-column:span 9}
+.bc-edtech{grid-column:span 3}
+
+/* Bio */
+.bc-label{
+  font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink4);margin-bottom:18px;
+}
+.bc-bio-body{
+  font-size:15.5px;color:var(--ink2);line-height:1.9;
+  p+p{margin-top:14px}
+  strong{color:var(--ink);font-weight:600}
 }
 
-.app__profile-item {
-  width: 250px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex-direction: column;
-  margin: 2rem;
+/* Profile card */
+.bc-avatar{
+  width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--emerald),#34D399);
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;margin-bottom:16px;
+  box-shadow:0 4px 16px rgba(5,150,105,.22);
+}
+.bc-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:26px;font-weight:700;color:var(--ink);
+  letter-spacing:-.02em;margin-bottom:3px;
+}
+.bc-role-title{font-size:13px;color:var(--ink3);line-height:1.5;margin-bottom:14px}
+.bc-status{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:'DM Mono',monospace;
+  font-size:10.5px;color:var(--emerald);
+  background:var(--em-lt);
+  border:1px solid rgba(5,150,105,.18);
+  padding:5px 12px;border-radius:100px;
+  margin-bottom:18px;
+  &::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--emerald);animation:blink 1.8s infinite}
+}
+.bc-tags{display:flex;flex-wrap:wrap;gap:7px}
+.bc-tag{
+  font-family:'DM Mono',monospace;
+  font-size:10.5px;padding:4px 12px;border-radius:100px;
+  background:var(--parchment);color:var(--ink3);
+  border:1px solid var(--parchment3);
+  transition:border-color .2s,color .2s,background .2s;
+  &:hover{border-color:var(--emerald);color:var(--emerald);background:var(--em-lt)}
+}
 
-  img {
-    width: 100%;
-    height: 190px;
-    border-radius: 15px;
-    object-fit: cover;
+/* Role mini */
+.bc-role-icon{font-size:26px;margin-bottom:12px}
+.bc-role-name{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.bc-role-desc{font-size:12.5px;color:var(--ink3);line-height:1.6}
+
+/* Stats */
+.bc-stat-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:66px;font-weight:700;line-height:.95;
+  color:var(--ink);letter-spacing:-.04em;
+  sup{font-size:30px;color:var(--emerald)}
+}
+.bc-stat-l{font-size:13px;color:var(--ink3);margin-top:10px;font-weight:500}
+
+/* Testimonial */
+.bc-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(17px,2vw,22px);
+  font-style:italic;font-weight:400;
+  color:var(--ink2);line-height:1.8;
+  position:relative;padding-left:28px;
+  &::before{
+    content:'';position:absolute;left:0;top:6px;bottom:6px;
+    width:2.5px;background:var(--emerald);border-radius:2px;
   }
+}
+.bc-author{
+  font-family:'DM Mono',monospace;
+  font-size:11px;color:var(--emerald);
+  letter-spacing:.1em;margin-top:18px;
+}
 
-  .about-placeholder-icon {
-    width: 100%;
-    height: 190px;
-    border-radius: 15px;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 4rem;
-    font-weight: bold;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  }
-
-  @media screen and (min-width: 2000px) {
-    width: 370px;
-    margin: 2rem 4rem;
-
-    img {
-      height: 320px;
-    }
-
-    .about-placeholder-icon {
-      height: 320px;
-      font-size: 6rem;
-    }
-  }
+@media(max-width:1024px){
+  .bento{grid-template-columns:1fr;gap:10px}
+  .bc-bio,.bc-card,.bc-role,.bc-stat,.bc-testi,.bc-edtech{grid-column:span 1}
 }

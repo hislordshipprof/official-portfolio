@@ -1,69 +1,94 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { urlFor,client } from "../../clients";
-import { images } from "../../constants";
-import "./About.scss";
-
-import { AppWrap, MotionWrap } from '../../wrapper';
-// const Abouts= [
-//   {title:'Web Developer', description:'I am a web developer with a passion for building web applications. I have a strong background in front-end development and have worked with a variety of technologies. I am a self-taught developer and I am always looking to learn new things.,imgUrl: "web-dev.png"', imgUrl: images.about01 },
-//   {title:'Frontend', description:'I am a frontend Developer and I am always looking for new opportunities to work on projects. I am also a self-taught developer and I am always looking to learn new things.',imgUrl: images.about02 },
-//   {title:'Backend', description:'I am a Backend Developer and I am always looking for new opportunities to work on projects. I am also a self-taught developer and I am always looking to learn new things.',imgUrl: images.about03 },
-//   {title:'AWS practitioner', description:'I am a graphic designer and I am always looking for new opportunities to work on projects. I am also a self-taught developer and I am always looking to learn new things.',imgUrl: images.about04 },
-
-// ]
+import React, { useEffect } from 'react';
+import './About.scss';
 
 const About = () => {
-  // Professional journey data with actual images
-  const professionalJourney = [
-    {
-      title: 'Full-Stack Engineer',
-      description: 'Frontend-focused software engineer with extensive experience in crafting engaging user interfaces using React and optimizing performance for large-scale applications.',
-      imgUrl: images.fullStackImage
-    },
-    {
-      title: 'DevSecOps Engineer', 
-      description: 'Expert in secure infrastructure automation, CI/CD pipelines, and cloud security best practices, ensuring robust and scalable deployment architectures.',
-      imgUrl: images.devSecOpsImage
-    },
-    {
-      title: 'AI/ML Developer',
-      description: 'Specialized in integrating AI and machine learning solutions into web applications, with expertise in OpenAI APIs, natural language processing, and intelligent user interfaces.',
-      imgUrl: images.aiDeveloperImage
-    },
-    {
-      title: 'EdTech Specialist',
-      description: 'Passionate about leveraging technology to enhance learning experiences, building AI-powered educational platforms that improve student engagement and comprehension.',
-      imgUrl: images.edTechImage
-    }
-  ];
+  useEffect(() => {
+    const cells = document.querySelectorAll('.bc');
+    const handlers = [];
+    cells.forEach(cell => {
+      const handler = (e) => {
+        const r = cell.getBoundingClientRect();
+        cell.style.setProperty('--gx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+        cell.style.setProperty('--gy', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+      };
+      cell.addEventListener('mousemove', handler);
+      handlers.push({ cell, handler });
+    });
+    return () => handlers.forEach(({ cell, handler }) => cell.removeEventListener('mousemove', handler));
+  }, []);
 
   return (
-    <>
-      <h2 className="head-text">My Journey <span>As a </span> <br />Software  <span>Developer</span></h2>
+    <section id="about" className="section">
+      <div className="wrap">
+        <p className="s-label rv">About</p>
+        <h2 className="s-head rv">Who Is <em>Benjamin?</em></h2>
 
-      <div className="app__profiles">
-        {professionalJourney.map((role, index) => (
-          <motion.div
-            whileInView={{ opacity: 1 }}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.5, type: 'tween' }}
-            className="app__profile-item"
-            key={role.title + index}
-          >
-            <img src={role.imgUrl} alt={role.title} className="professional-journey-image" />
-            <h2 className="bold-text" style={{ marginTop: 20 }}>{role.title}</h2>
-            <p className="p-text" style={{ marginTop: 10 }}>{role.description}</p>
-          </motion.div>
-        ))}
+        <div className="bento">
+          <div className="bc bc-bio rv">
+            <div className="bc-label">Background</div>
+            <div className="bc-bio-body">
+              <p>I'm <strong>Benjamin Agyekum</strong> — a Full-Stack Engineer and AI Developer who cares deeply about every layer of the product. I've shipped production applications for startups across California, San Francisco, and globally distributed teams, collectively impacting over <strong>500,000 users</strong>.</p>
+              <p>My superpower is <strong>connecting design, engineering and AI</strong> — building experiences that genuinely move the needle. From architecting cloud infrastructure to integrating cutting-edge LLM pipelines, I bring a holistic and detail-driven approach to every problem I take on.</p>
+            </div>
+          </div>
+
+          <div className="bc bc-card rv d1">
+            <div className="bc-avatar">👨🏾‍💻</div>
+            <div className="bc-name">Benjamin Agyekum</div>
+            <div className="bc-role-title">Full Stack · AI Specialist · EdTech · DevSecOps</div>
+            <div className="bc-status">Available for new projects</div>
+            <div className="bc-tags">
+              {['React / Next.js', 'TypeScript', 'Node.js', 'Python', 'AI/ML', 'AWS', 'React Native', 'DevSecOps'].map(tag => (
+                <span className="bc-tag" key={tag}>{tag}</span>
+              ))}
+            </div>
+          </div>
+
+          <div className="bc bc-role rv d1">
+            <div className="bc-role-icon">⚙️</div>
+            <div className="bc-role-name">Full-Stack Engineer</div>
+            <div className="bc-role-desc">React, Next.js, Node.js &amp; Python — end-to-end production delivery.</div>
+          </div>
+          <div className="bc bc-role rv d2">
+            <div className="bc-role-icon">🤖</div>
+            <div className="bc-role-name">AI/ML Developer</div>
+            <div className="bc-role-desc">OpenAI, NLP, and intelligent UI integration for modern apps.</div>
+          </div>
+          <div className="bc bc-role rv d3">
+            <div className="bc-role-icon">🔒</div>
+            <div className="bc-role-name">DevSecOps</div>
+            <div className="bc-role-desc">Secure CI/CD pipelines &amp; cloud-native automation at scale.</div>
+          </div>
+
+          <div className="bc bc-stat rv d1">
+            <div className="bc-stat-n"><span className="count" data-t="47">0</span><sup>+</sup></div>
+            <div className="bc-stat-l">Projects Shipped</div>
+          </div>
+          <div className="bc bc-stat rv d2">
+            <div className="bc-stat-n">500<sup>K</sup></div>
+            <div className="bc-stat-l">Users Impacted</div>
+          </div>
+          <div className="bc bc-stat rv d3">
+            <div className="bc-stat-n"><span className="count" data-t="5">0</span><sup>+</sup></div>
+            <div className="bc-stat-l">Years Experience</div>
+          </div>
+
+          <div className="bc bc-role bc-edtech rv d2">
+            <div className="bc-role-icon">📚</div>
+            <div className="bc-role-name">EdTech Specialist</div>
+            <div className="bc-role-desc">AI-powered educational platforms improving student engagement &amp; outcomes.</div>
+          </div>
+
+          <div className="bc bc-testi rv">
+            <div className="bc-quote">
+              "His attention to detail is incredible. He has proven to be very innovative and will work with ideas that I have as well — thinking of new ways to bring more traffic to our site in ways I would never have considered."
+            </div>
+            <div className="bc-author">— Lawrence · Arizona State College</div>
+          </div>
+        </div>
       </div>
-    </>
+    </section>
   );
 };
 
-
-export default AppWrap(
-  MotionWrap(About, "app__about"),
-  "about",
-  "app__whitebg"
-);
+export default About;

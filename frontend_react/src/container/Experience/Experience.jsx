@@ -1,199 +1,140 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { HiOfficeBuilding, HiLocationMarker, HiCalendar, HiCode, HiStar, HiTrendingUp } from "react-icons/hi";
-import { FaReact, FaNodeJs, FaPython, FaDatabase, FaAws, FaDocker } from "react-icons/fa";
-import { SiTypescript, SiMongodb, SiPostgresql, SiFirebase } from "react-icons/si";
-import { AppWrap, MotionWrap } from "../../wrapper";
-import { client } from "../../clients";
-import { images } from "../../constants";
-import "./Experience.scss";
+import React, { useState, useEffect } from 'react';
+import { client } from '../../clients';
+import './Experience.scss';
+
+const fallbackExperiences = [
+  {
+    period: 'Jul 2025 – Present', company: 'Studyfetch', location: 'California, USA', badge: 'Current',
+    title: 'Full-Stack Software Engineer (AI & EdTech)',
+    highlights: [
+      'Engineered full-stack apps using React Native, Next.js & TypeScript for an AI-powered learning platform.',
+      'Optimized MongoDB and PostgreSQL database architectures for improved data retrieval efficiency at scale.',
+      'Built AI-powered features that measurably enhanced student engagement and comprehension outcomes.',
+    ],
+    win: 'Built AI-powered learning platform features',
+    chips: ['React Native', 'Next.js', 'TypeScript', 'MongoDB', 'PostgreSQL'],
+  },
+  {
+    period: 'Mar 2021 – Feb 2024', company: 'luupli.com', location: 'Remote',
+    title: 'Senior Mobile Developer',
+    highlights: [
+      'Led React Native app for a social e-commerce platform, boosting community engagement by 45%.',
+      'Engineered video playback, real-time notifications and feeds with Redux Toolkit & TypeScript.',
+      'Increased user retention by over 60% through enhanced authentic interactions and performance improvements.',
+    ],
+    win: '45% community engagement boost',
+    chips: ['React Native', 'Material UI', 'Redux Toolkit', 'TypeScript'],
+  },
+  {
+    period: 'Mar 2017 – Oct 2020', company: 'Teamally.com', location: 'Remote',
+    title: 'Full-Stack Developer',
+    highlights: [
+      'Built production platforms across logistics, finance, social media and coworking — impacting 5,000+ users.',
+      'Achieved 90+ Lighthouse scores and sub-second Time to Interactive via Next.js, Node.js and Django.',
+    ],
+    win: '5,000+ users impacted across industries',
+    chips: ['Next.js', 'Node.js', 'Django', 'RESTful APIs'],
+  },
+  {
+    period: 'Feb 2021 – Aug 2021', company: 'AmalTech GmbH', location: 'Remote',
+    title: 'Software Engineer Intern',
+    highlights: [
+      'Built scalable Python/Django backend for a Community Learning Platform, cutting API response times by 15%.',
+      'React.js front-ends with Redux improved user engagement by 30% across 300+ active users.',
+    ],
+    win: '15% faster API response times',
+    chips: ['Python', 'Django', 'PostgreSQL', 'React.js'],
+  },
+  {
+    period: 'Dec 2021 – May 2022', company: 'Microverse', location: 'San Francisco',
+    title: 'Software Developer Intern',
+    highlights: [
+      'Designed an analytics dashboard using React.js and D3.js with a global remote team of engineers.',
+      'Integrated Node.js with Azure cloud services, improving overall app performance by 25%.',
+    ],
+    win: '25% performance improvement via Azure',
+    chips: ['React.js', 'D3.js', 'Node.js', 'Azure'],
+  },
+];
+
+const formatDate = (d) => {
+  if (!d) return '';
+  const date = new Date(d);
+  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+};
 
 const Experience = () => {
-  const [experiences, setExperiences] = useState([]);
-
-  // Tech icon mapping for visual representation
-  const getTechIcon = (tech) => {
-    const techLower = tech.toLowerCase();
-    if (techLower.includes('react')) return <FaReact className="tech-icon react" />;
-    if (techLower.includes('node')) return <FaNodeJs className="tech-icon node" />;
-    if (techLower.includes('python')) return <FaPython className="tech-icon python" />;
-    if (techLower.includes('typescript')) return <SiTypescript className="tech-icon typescript" />;
-    if (techLower.includes('mongodb')) return <SiMongodb className="tech-icon mongodb" />;
-    if (techLower.includes('postgresql')) return <SiPostgresql className="tech-icon postgresql" />;
-    if (techLower.includes('firebase')) return <SiFirebase className="tech-icon firebase" />;
-    if (techLower.includes('aws')) return <FaAws className="tech-icon aws" />;
-    if (techLower.includes('docker')) return <FaDocker className="tech-icon docker" />;
-    return <HiCode className="tech-icon default" />;
-  };
+  const [experiences, setExperiences] = useState(fallbackExperiences);
 
   useEffect(() => {
-    let isMounted = true; // Flag to track if component is mounted
-    
+    let mounted = true;
+    // workExperience documents are stored at top level in the old schema
     const query = '*[_type == "workExperience"] | order(startDate desc)';
-    
-    console.log('🔍 Experience Component - Fetching work experience...');
-    client.fetch(query)
-      .then((data) => {
-        if (isMounted) {
-          console.log('✅ Work Experience Data Success:', data);
-          setExperiences(data || []);
-        }
-      })
-      .catch((error) => {
-        if (isMounted) {
-          console.log('❌ Work Experience Data Error:', error);
-          setExperiences([]);
-        }
-      });
 
-    // Cleanup function to prevent memory leaks
-    return () => {
-      isMounted = false;
-    };
+    client
+      .fetch(query)
+      .then((data) => {
+        if (!mounted || !data || !data.length) return;
+        const mapped = data.map((w) => {
+          const start = formatDate(w.startDate);
+          const end = w.endDate ? formatDate(w.endDate) : 'Present';
+          const isNow = !w.endDate;
+          return {
+            period: `${start} – ${end}`,
+            company: w.company || '',
+            location: w.location || '',
+            badge: isNow ? 'Current' : null,
+            title: w.position || '',
+            highlights: w.responsibilities || w.achievements || [],
+            win: w.achievements && w.achievements.length ? w.achievements[0] : '',
+            chips: w.technologies || [],
+          };
+        });
+        setExperiences(mapped);
+      })
+      .catch(() => {});
+
+    return () => { mounted = false; };
   }, []);
 
-  const formatDate = (dateString) => {
-    if (!dateString) return 'Present';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'short' 
-    });
-  };
-
-  const calculateDuration = (startDate, endDate) => {
-    const start = new Date(startDate);
-    const end = endDate ? new Date(endDate) : new Date();
-    const diffTime = Math.abs(end - start);
-    const diffYears = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 365));
-    const diffMonths = Math.floor((diffTime % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
-    
-    if (diffYears > 0) {
-      return `${diffYears}y ${diffMonths}m`;
-    }
-    return `${diffMonths}m`;
-  };
-
   return (
-    <div className="app__experience-section">
-      <div className="section-header">
-        <div className="section-profile">
-          <img src={images.profilePhoto} alt="Benjamin - Professional Profile" className="section-profile-img" />
+    <section id="experience" className="section">
+      <div className="wrap">
+        <div className="exp-top">
+          <div>
+            <p className="s-label rv">Experience</p>
+            <h2 className="s-head rv">Professional <em>Journey</em></h2>
+          </div>
+          <p className="s-body rv" style={{ maxWidth: 300, textAlign: 'right' }}>
+            A track record of innovation across global teams — from startup to enterprise.
+          </p>
         </div>
-        <h2 className="head-text">
-          Professional <span>Experience</span>
-        </h2>
-        <p className="section-subtitle">A journey of innovation and growth in software development</p>
-      </div>
-
-      <div className="app__experience-grid">
-        {experiences.map((exp, index) => (
-          <motion.div
-            whileInView={{ opacity: [0, 1], y: [30, 0] }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="experience-card-wrapper"
-            key={index}
-          >
-            {/* Experience Card */}
-            <motion.div 
-              className="app__experience-card"
-              whileHover={{ y: -8, scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-            >
-              {/* Card Header with Date Badge */}
-              <div className="card-header">
-                <div className="date-badge">
-                  <HiCalendar className="date-icon" />
-                  <div className="date-info">
-                    <span className="date-text">
-                      {formatDate(exp.startDate)} - {formatDate(exp.endDate)}
-                    </span>
-                    <span className="duration-text">
-                      {calculateDuration(exp.startDate, exp.endDate)}
-                    </span>
-                  </div>
-                </div>
-                
-                <h3 className="position-title">{exp.position || 'Position'}</h3>
-                
-                <div className="company-info">
-                  <div className="company-name">
-                    <HiOfficeBuilding className="company-icon" />
-                    <span>{exp.company || 'Company'}</span>
-                  </div>
-                  <div className="company-location">
-                    <HiLocationMarker className="location-icon" />
-                    <span>{exp.location || 'Remote'}</span>
-                  </div>
+        <div className="timeline">
+          {experiences.map((exp, i) => (
+            <div className="tl-row rv" key={i}>
+              <div className="tl-meta">
+                <div className="tl-period">{exp.period}</div>
+                <div className="tl-co">{exp.company}</div>
+                <div className="tl-loc">{exp.location}</div>
+                {exp.badge && <div className="tl-badge">{exp.badge}</div>}
+              </div>
+              <div className="tl-spine"></div>
+              <div className="tl-body">
+                <div className="tl-title">{exp.title}</div>
+                <ul className="tl-hl">
+                  {exp.highlights.map((h, j) => <li key={j}>{h}</li>)}
+                </ul>
+                {exp.win && <div className="tl-win">🏆 {exp.win}</div>}
+                <div className="tl-chips">
+                  {exp.chips.map(c => <span className="chip" key={c}>{c}</span>)}
                 </div>
               </div>
-
-              {/* Card Content */}
-              <div className="card-content">
-                <div className="responsibilities-section">
-                  <h4 className="section-title">
-                    <HiStar className="section-icon" />
-                    Key Highlights
-                  </h4>
-                  <ul className="responsibilities-list">
-                    {exp.responsibilities && exp.responsibilities.slice(0, 2).map((resp, i) => (
-                      <li key={i} className="responsibility-item">{resp}</li>
-                    ))}
-                  </ul>
-                  {exp.responsibilities && exp.responsibilities.length > 2 && (
-                    <button className="expand-btn">
-                      +{exp.responsibilities.length - 2} more
-                    </button>
-                  )}
-                </div>
-
-                {/* Achievements */}
-                {exp.achievements && exp.achievements.length > 0 && (
-                  <div className="achievements-section">
-                    <h4 className="section-title">
-                      <HiTrendingUp className="section-icon" />
-                      Achievements
-                    </h4>
-                    <ul className="achievements-list">
-                      {exp.achievements.slice(0, 1).map((achievement, i) => (
-                        <li key={i} className="achievement-item">{achievement}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              {/* Technologies Footer */}
-              {exp.technologies && exp.technologies.length > 0 && (
-                <div className="card-footer">
-                  <div className="tech-stack">
-                    {exp.technologies.slice(0, 4).map((tech, i) => (
-                      <motion.div
-                        key={i}
-                        className="tech-badge"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {getTechIcon(tech)}
-                        <span className="tech-name">{tech}</span>
-                      </motion.div>
-                    ))}
-                    {exp.technologies.length > 4 && (
-                      <div className="tech-more">+{exp.technologies.length - 4}</div>
-                    )}
-                  </div>
-                </div>
-              )}
-            </motion.div>
-          </motion.div>
-        ))}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default AppWrap(
-  MotionWrap(Experience, "app__experience"),
-  "experience",
-  "app__whitebg"
-);
+export default Experience;

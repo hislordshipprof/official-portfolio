@@ -1,46 +1,54 @@
-import React,{useState} from 'react'
-import './Navbar.scss'
-import {images} from '../../constants'
-import { HiMenuAlt4, HiX } from "react-icons/hi";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from 'react';
+import './Navbar.scss';
 
 const Navbar = () => {
-    const [toggle, setToggle] = useState(false)
+  const [pinned, setPinned] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setPinned(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <nav className="app__navbar">
-      <div className="app__navbar-logo">
-        <img src={images.logo} alt="logo" />
-      </div>
-      <ul className="app__navbar-links">
-      {["home", "about", "experience",  "certifications", "skills-radar", "github", "developer-metrics", "work", "contact"].map((item) => (
-        <li className="app__flex p-text" key={`link-${item}`}>
-          <div />
-          <a href={`#${item}`}>{item.replace('-', ' ')}</a>
-        </li>
-      ))}
+    <nav className={`navbar${pinned ? ' pinned' : ''}`}>
+      <a href="#hero" className="logo">Benjamin<span className="logo-dot"></span></a>
+      <ul className="nav-links">
+        {[
+          { href: '#about', label: 'About' },
+          { href: '#experience', label: 'Experience' },
+          { href: '#projects', label: 'Work' },
+          { href: '#metrics', label: 'Impact' },
+          { href: '#contact', label: 'Contact' },
+        ].map((item) => (
+          <li key={item.label}><a href={item.href}>{item.label}</a></li>
+        ))}
       </ul>
-      <div className="app__navbar-menu">
-        <HiMenuAlt4 onClick={() => setToggle(true)} />
-        {toggle && (
-          <motion.div
-            whileInView={{ x: [300, 0] }}
-            transition={{ duration: 0.85, ease: "easeOut" }}
-          >
-            <HiX onClick={() => setToggle(false)} />
-            <ul>
-              {["home", "about", "experience", "education", "certifications", "skills-radar", "github", "developer-metrics", "work", "contact"].map((item) => (
-                <li key={item}>
-                  <a href={`#${item}`} onClick={() => setToggle(false)}>
-                    {item.replace('-', ' ')}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        )}
-      </div>
+      <a href="mailto:beagyekum21@gmail.com" className="nav-cta">Hire Me ↗</a>
+
+      {/* Mobile menu toggle */}
+      <button className="nav-mobile-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
+        {menuOpen ? '✕' : '☰'}
+      </button>
+
+      {menuOpen && (
+        <div className="nav-mobile-menu">
+          {[
+            { href: '#about', label: 'About' },
+            { href: '#experience', label: 'Experience' },
+            { href: '#projects', label: 'Work' },
+            { href: '#metrics', label: 'Impact' },
+            { href: '#certifications', label: 'Certifications' },
+            { href: '#contact', label: 'Contact' },
+          ].map((item) => (
+            <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)}>{item.label}</a>
+          ))}
+          <a href="mailto:beagyekum21@gmail.com" className="nav-mobile-cta">Hire Me ↗</a>
+        </div>
+      )}
     </nav>
   );
-}
+};
 
-export default Navbar
+export default Navbar;

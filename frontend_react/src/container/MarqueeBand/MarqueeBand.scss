@@ -1,0 +1,17 @@
+.marquee-band{
+  background:var(--ink);padding:16px 0;
+  overflow:hidden;border-top:1px solid rgba(255,255,255,.04);
+}
+.marquee-track{
+  display:flex;white-space:nowrap;
+  animation:marquee 28s linear infinite;
+  &:hover{animation-play-state:paused}
+}
+.m-item{
+  display:inline-flex;align-items:center;gap:18px;
+  padding:0 18px;
+  font-family:'DM Mono',monospace;
+  font-size:11.5px;letter-spacing:.12em;
+  color:rgba(255,255,255,.38);text-transform:uppercase;
+  em{color:var(--emerald);font-style:normal;font-size:10px}
+}

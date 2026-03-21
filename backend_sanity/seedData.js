@@ -1,4 +1,6 @@
 const sanityClient = require('@sanity/client');
+const fs = require('fs');
+const path = require('path');
 
 const client = sanityClient({
   projectId: 'l3wd7476',
@@ -186,8 +188,41 @@ const certificationsData = [
   }
 ];
 
-// Projects Data (AI-focused)
+// Path to project images in the frontend
+const IMG_DIR = path.join(__dirname, '..', 'frontend_react', 'public', 'images', 'projects');
+
+// Projects Data (newest first)
 const projectsData = [
+  {
+    _type: 'works',
+    title: 'OPSLY — AI Property Management',
+    description: 'Live AI agent platform with voice & vision for property ops — tenants report maintenance issues via voice, AI assesses damage severity, and managers monitor portfolios in real-time with SLA tracking.',
+    date: '2026-01-15',
+    tags: ['AI/ML', 'Full-Stack'],
+    projectLink: '',
+    codeLink: 'https://github.com/hislordshipprof/opsly',
+    imageFile: 'opsly.jpg'
+  },
+  {
+    _type: 'works',
+    title: 'CallSphere — Multi-Agent Logistics',
+    description: 'End-to-end logistics and last-mile delivery platform with AI-powered customer service, real-time shipment tracking, and multi-agent orchestration using OpenAI Agents API.',
+    date: '2026-01-12',
+    tags: ['AI/ML', 'Full-Stack'],
+    projectLink: '',
+    codeLink: 'https://github.com/hislordshipprof/-MultiAgentPlatform',
+    imageFile: 'callsphere.jpg'
+  },
+  {
+    _type: 'works',
+    title: 'Agentic Map — Smart Errand Routing',
+    description: 'AI-powered mobile app that converts conversational commands into optimised multi-stop routes using dual Gemini agents, Google Maps SDK, and intelligent detour budgeting.',
+    date: '2026-01-18',
+    tags: ['Mobile App', 'AI/ML'],
+    projectLink: '',
+    codeLink: 'https://github.com/hislordshipprof/Agentic_Map_ReactNative_Expo',
+    imageFile: 'agentic-map.jpg'
+  },
   {
     _type: 'works',
     title: 'Resume AI - Intelligent Resume Tailoring System',
@@ -196,7 +231,7 @@ const projectsData = [
     tags: ['AI/ML', 'Full-Stack'],
     projectLink: 'https://github.com/hislordshipprof/resume-ai-optimizer',
     codeLink: 'https://github.com/hislordshipprof/resume-ai-optimizer',
-    imgUrl: null // Will be set to use the image from assets
+    imageFile: 'Intelligent Resume Tailoring Design.png'
   },
   {
     _type: 'works',
@@ -206,7 +241,7 @@ const projectsData = [
     tags: ['Mobile App', 'Full-Stack'],
     projectLink: 'https://github.com/hislordshipprof/ReactNative_UberClone',
     codeLink: 'https://github.com/hislordshipprof/ReactNative_UberClone',
-    imgUrl: null
+    imageFile: 'Full Stack Uber Clone Design.png'
   },
   {
     _type: 'works',
@@ -216,7 +251,7 @@ const projectsData = [
     tags: ['AI/ML', 'Mobile App'],
     projectLink: 'https://github.com/hislordshipprof/ReactNative_AI_Interview_App',
     codeLink: 'https://github.com/hislordshipprof/ReactNative_AI_Interview_App',
-    imgUrl: null
+    imageFile: 'IntervuAI_ Your Interview Prep Partner.png'
   },
   {
     _type: 'works',
@@ -226,7 +261,7 @@ const projectsData = [
     tags: ['Mobile App'],
     projectLink: 'https://github.com/hislordshipprof/ReactNativeMovieApp',
     codeLink: 'https://github.com/hislordshipprof/ReactNativeMovieApp',
-    imgUrl: null
+    imageFile: 'movie.png'
   },
   {
     _type: 'works',
@@ -236,7 +271,7 @@ const projectsData = [
     tags: ['Full-Stack', 'Web App'],
     projectLink: 'https://github.com/hislordshipprof/hislordshipprof-student_management_app-',
     codeLink: 'https://github.com/hislordshipprof/hislordshipprof-student_management_app-',
-    imgUrl: null
+    imageFile: 'Student Management App Interface Overview.png'
   },
   {
     _type: 'works',
@@ -246,7 +281,7 @@ const projectsData = [
     tags: ['Web App', 'DevSecOps'],
     projectLink: 'https://github.com/hislordshipprof/Blockchain',
     codeLink: 'https://github.com/hislordshipprof/Blockchain',
-    imgUrl: null
+    imageFile: 'crypto.png'
   },
   {
     _type: 'works',
@@ -256,7 +291,7 @@ const projectsData = [
     tags: ['Web App'],
     projectLink: 'https://github.com/hislordshipprof/React-Fitness-App',
     codeLink: 'https://github.com/hislordshipprof/React-Fitness-App',
-    imgUrl: null
+    imageFile: 'React Fitness App Promo Design.png'
   },
   {
     _type: 'works',
@@ -266,7 +301,7 @@ const projectsData = [
     tags: ['Mobile App'],
     projectLink: 'https://github.com/hislordshipprof/React-native-NFT-APP',
     codeLink: 'https://github.com/hislordshipprof/React-native-NFT-APP',
-    imgUrl: null
+    imageFile: 'nft.png'
   },
   {
     _type: 'works',
@@ -276,7 +311,7 @@ const projectsData = [
     tags: ['Web App'],
     projectLink: 'https://github.com/hislordshipprof/Hpal-RealEstate',
     codeLink: 'https://github.com/hislordshipprof/Hpal-RealEstate',
-    imgUrl: null
+    imageFile: 'real-estate.jpg'
   }
 ];
 
@@ -404,9 +439,21 @@ async function seedData() {
       await client.create(cert);
     }
 
-    console.log('💼 Adding projects...');
+    console.log('💼 Adding projects (with images)...');
     for (const project of projectsData) {
-      await client.create(project);
+      const { imageFile, ...doc } = project;
+      if (imageFile) {
+        const imgPath = path.join(IMG_DIR, imageFile);
+        if (fs.existsSync(imgPath)) {
+          console.log(`  📸 Uploading ${imageFile}...`);
+          const asset = await client.assets.upload('image', fs.createReadStream(imgPath), { filename: imageFile });
+          doc.imgUrl = { _type: 'image', asset: { _type: 'reference', _ref: asset._id } };
+        } else {
+          console.log(`  ⚠️ Image not found: ${imgPath}`);
+        }
+      }
+      await client.create(doc);
+      console.log(`  ✅ ${doc.title}`);
     }
 
     console.log('👨‍💻 Adding about sections...');

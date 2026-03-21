@@ -1,0 +1,21 @@
+#cur{
+  position:fixed;width:9px;height:9px;
+  background:var(--emerald);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width .22s var(--ease),height .22s var(--ease),background .2s;
+}
+#cur-ring{
+  position:fixed;width:34px;height:34px;
+  border:1.5px solid rgba(5,150,105,.45);
+  border-radius:50%;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:width .28s var(--ease),height .28s var(--ease),opacity .3s;
+}
+body.hov #cur{width:48px;height:48px;background:rgba(5,150,105,.14);border:1.5px solid var(--emerald)}
+body.hov #cur-ring{opacity:0;width:0;height:0}
+
+@media(max-width:1024px){
+  #cur, #cur-ring{display:none}
+  body{cursor:auto}
+}

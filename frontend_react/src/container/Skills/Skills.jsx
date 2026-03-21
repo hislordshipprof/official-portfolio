@@ -1,125 +1,94 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import ReactTooltip from "react-tooltip";
+import React, { useEffect } from 'react';
+import './Skills.scss';
 
-import { AppWrap, MotionWrap } from "../../wrapper";
-import { urlFor, client } from "../../clients";
-import "./Skills.scss";
+const skillGroups = [
+  {
+    icon: '🎨', name: 'Frontend', sub: 'UI Frameworks & Languages', delay: '',
+    bars: [
+      { label: 'React / Next.js', pct: 95 },
+      { label: 'TypeScript', pct: 94 },
+      { label: 'React Native', pct: 78 },
+    ],
+  },
+  {
+    icon: '⚙️', name: 'Backend', sub: 'Servers, APIs & Frameworks', delay: 'd1',
+    bars: [
+      { label: 'Node.js', pct: 92 },
+      { label: 'Python / Django', pct: 90 },
+      { label: 'AI / ML & OpenAI', pct: 88 },
+    ],
+  },
+  {
+    icon: '☁️', name: 'Infrastructure', sub: 'Cloud, Data & DevOps', delay: 'd2',
+    bars: [
+      { label: 'AWS Cloud', pct: 85 },
+      { label: 'MongoDB', pct: 88 },
+      { label: 'PostgreSQL', pct: 86 },
+    ],
+  },
+];
 
 const Skills = () => {
-  const [experiences, setExperiences] = useState([]);
-  const [skills, setSkills] = useState([]);
-
   useEffect(() => {
-    let isMounted = true; // Flag to track if component is mounted
+    const fills = document.querySelectorAll('.sb-fill');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.style.width = e.target.dataset.w + '%';
+            observer.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    fills.forEach((f) => observer.observe(f));
 
-    const query = '*[_type == "experiences"]';
-    const skillsQuery = '*[_type == "skills"]';
+    // Radial glow
+    const cards = document.querySelectorAll('.sk-card');
+    const handlers = [];
+    cards.forEach(card => {
+      const handler = (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--gx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+        card.style.setProperty('--gy', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+      };
+      card.addEventListener('mousemove', handler);
+      handlers.push({ card, handler });
+    });
 
-    console.log('🔍 Skills Component - Fetching experiences...');
-    client.fetch(query)
-      .then((data) => {
-        if (isMounted) {
-          console.log('✅ Experiences Data Success:', data);
-          setExperiences(data);
-        }
-      })
-      .catch((error) => {
-        if (isMounted) {
-          console.log('❌ Experiences Data Error:', error);
-        }
-      });
-
-    console.log('🔍 Skills Component - Fetching skills...');
-    client.fetch(skillsQuery)
-      .then((data) => {
-        if (isMounted) {
-          console.log('✅ Skills Data Success:', data);
-          setSkills(data);
-        }
-      })
-      .catch((error) => {
-        if (isMounted) {
-          console.log('❌ Skills Data Error:', error);
-        }
-      });
-
-    // Cleanup function to prevent memory leaks
     return () => {
-      isMounted = false;
+      observer.disconnect();
+      handlers.forEach(({ card, handler }) => card.removeEventListener('mousemove', handler));
     };
   }, []);
 
   return (
-    <>
-      <h2 className="head-text">Skills & Experiences</h2>
-
-      <div className="app__skills-container">
-        <motion.div className="app__skills-list">
-          {skills.map((skill) => (
-            <motion.div
-              whileInView={{ opacity: [0, 1] }}
-              transition={{ duration: 0.5 }}
-              className="app__skills-item app__flex"
-              key={skill.name}
-            >
-              <div
-                className="app__flex"
-                style={{ backgroundColor: skill.bgColor }}
-              >
-                {skill.icon ? (
-                  <img src={urlFor(skill.icon)} alt={skill.name} />
-                ) : (
-                  <div className="skill-text-icon">
-                    {skill.name.charAt(0).toUpperCase()}
+    <section id="skills">
+      <div className="wrap" style={{ paddingTop: 112, paddingBottom: 112 }}>
+        <p className="s-label rv">Skills Radar</p>
+        <h2 className="s-head rv">Technology <em>Proficiency</em></h2>
+        <p className="s-body rv">Deep expertise across frontend, backend, cloud and AI engineering stacks.</p>
+        <div className="sk-grid">
+          {skillGroups.map((group) => (
+            <div className={`sk-card rv ${group.delay}`} key={group.name}>
+              <div className="sk-icon">{group.icon}</div>
+              <div className="sk-name">{group.name}</div>
+              <div className="sk-sub">{group.sub}</div>
+              <div className="sk-bars">
+                {group.bars.map((bar) => (
+                  <div key={bar.label}>
+                    <div className="sbl">{bar.label}<span>{bar.pct}%</span></div>
+                    <div className="sb-track"><div className="sb-fill" data-w={bar.pct}></div></div>
                   </div>
-                )}
-              </div>
-              <p className="p-text">{skill.name}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-        <div className="app__skills-exp">
-          {experiences.map((experience) => (
-            <motion.div className="app__skills-exp-item" key={experience.year}>
-              <div className="app__skills-exp-year">
-                <p className="bold-text">{experience.year}</p>
-              </div>
-              <motion.div className="app__skills-exp-works">
-                {experience.works.map((work) => (
-                  <>
-                    <motion.div
-                      whileInView={{ opacity: [0, 1] }}
-                      transition={{ duration: 0.5 }}
-                      className="app__skills-exp-work"
-                      data-tip
-                      data-for={work.name}
-                      key={work.name}
-                    >
-                      <h4 className="bold-text">{work.name}</h4>
-                      <p className="p-text">{work.company}</p>
-                    </motion.div>
-                    <ReactTooltip
-                      id={work.name}
-                      effect="solid"
-                      arrowColor="#fff"
-                      className="skills-tooltip"
-                    >
-                      {work.desc}
-                    </ReactTooltip>
-                  </>
                 ))}
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
-    </>
+    </section>
   );
 };
 
-export default AppWrap(
-  MotionWrap(Skills, "app__skills"),
-  "skills",
-  "app__whitebg"
-);
+export default Skills;

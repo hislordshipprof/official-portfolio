@@ -1,111 +1,69 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { AppWrap, MotionWrap } from "../../wrapper";
-import { client } from "../../clients";
-import "./Certifications.scss";
+import React, { useState, useEffect } from 'react';
+import { client } from '../../clients';
+import './Certifications.scss';
+
+const typeIcons = { 'AI/ML': '🤖', Data: '🧠', Programming: '💻', DevOps: '☁️', Other: '📜' };
+
+const fallbackCerts = [
+  { icon: '🤖', title: 'Natural Language Processing and Artificial Intelligence', issuer: 'AI Certification Institute', date: 'Feb 2024', tags: ['NLP', 'Language Models', 'Chatbots', 'Sentiment Analysis'], credentialUrl: '' },
+  { icon: '🧠', title: 'Machine Learning & AI Engineer', issuer: 'Professional Certification Body', date: 'Dec 2023', tags: ['ML', 'Neural Networks', 'TensorFlow', 'PyTorch'], credentialUrl: '' },
+  { icon: '💻', title: 'Data Structure and Algorithm', issuer: 'Technical Certification Institute', date: 'May 2023', tags: ['Algorithms', 'Problem Solving', 'Complexity Analysis'], credentialUrl: '' },
+];
 
 const Certifications = () => {
-  const [certifications, setCertifications] = useState([]);
+  const [certs, setCerts] = useState(fallbackCerts);
 
   useEffect(() => {
-    let isMounted = true; // Flag to track if component is mounted
-    
+    let mounted = true;
     const query = '*[_type == "certifications"] | order(date desc)';
-    
-    console.log('🔍 Certifications Component - Fetching certifications...');
-    client.fetch(query)
-      .then((data) => {
-        if (isMounted) {
-          console.log('✅ Certifications Data Success:', data);
-          setCertifications(data || []);
-        }
-      })
-      .catch((error) => {
-        if (isMounted) {
-          console.log('❌ Certifications Data Error:', error);
-          setCertifications([]);
-        }
-      });
 
-    // Cleanup function to prevent memory leaks
-    return () => {
-      isMounted = false;
-    };
+    client
+      .fetch(query)
+      .then((data) => {
+        if (!mounted || !data || !data.length) return;
+        const mapped = data.map((c) => ({
+          icon: typeIcons[c.type] || '📜',
+          title: c.title || '',
+          issuer: c.issuer || '',
+          date: c.date
+            ? new Date(c.date).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+            : '',
+          tags: c.skills || [],
+          credentialUrl: c.credentialUrl || '',
+        }));
+        setCerts(mapped);
+      })
+      .catch(() => {});
+
+    return () => { mounted = false; };
   }, []);
 
-  const formatDate = (dateString) => {
-    if (!dateString) return 'Present';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'short' 
-    });
-  };
-
   return (
-    <>
-      <h2 className="head-text">
-        Certifications & <span>Achievements</span>
-      </h2>
-
-      <div className="app__certifications-container">
-        {certifications.map((cert, index) => (
-          <motion.div
-            whileInView={{ opacity: [0, 1], scale: [0.8, 1] }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="app__certification-item"
-            key={index}
-          >
-            <div className="certification-icon">
-              {cert.type === 'AI/ML' ? '🤖' : 
-               cert.type === 'Data' ? '📊' : 
-               cert.type === 'Programming' ? '💻' : 
-               '🏆'}
-            </div>
-            
-            <div className="certification-content">
-              <h4 className="bold-text">{cert.title || 'Certification Title'}</h4>
-              
-              {cert.issuer && (
-                <p className="certification-issuer">{cert.issuer}</p>
-              )}
-              
-              {cert.date && (
-                <p className="certification-date">{formatDate(cert.date)}</p>
-              )}
-              
-              {cert.description && (
-                <p className="p-text certification-desc">{cert.description}</p>
-              )}
-              
-              {cert.skills && cert.skills.length > 0 && (
-                <div className="certification-skills">
-                  {cert.skills.map((skill, i) => (
-                    <span key={i} className="skill-tag">{skill}</span>
-                  ))}
-                </div>
-              )}
-              
+    <section id="certifications" className="section">
+      <div className="wrap">
+        <p className="s-label rv">Credentials</p>
+        <h2 className="s-head rv">Certifications &amp; <em>Achievements</em></h2>
+        <div className="cert-grid">
+          {certs.map((cert, i) => (
+            <div className={`cert-card rv${i % 3 === 1 ? ' d1' : i % 3 === 2 ? ' d2' : ''}`} key={i}>
+              <div className="cert-icon">{cert.icon}</div>
+              <div className="cert-title">{cert.title}</div>
+              <div className="cert-issuer">{cert.issuer}</div>
+              <div className="cert-date">{cert.date}</div>
+              <div className="cert-tags">
+                {cert.tags.map(t => <span className="ct" key={t}>{t}</span>)}
+              </div>
               {cert.credentialUrl && (
-                <a 
-                  href={cert.credentialUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="certification-link"
-                >
-                  View Credential →
+                <a href={cert.credentialUrl} target="_blank" rel="noreferrer" className="cert-link">
+                  View Credential ↗
                 </a>
               )}
             </div>
-          </motion.div>
-        ))}
+          ))}
+        </div>
       </div>
-    </>
+    </section>
   );
 };
 
-export default AppWrap(
-  MotionWrap(Certifications, "app__certifications"),
-  "certifications",
-  "app__whitebg"
-);
+export default Certifications;

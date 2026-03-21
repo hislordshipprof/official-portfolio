@@ -1,158 +1,105 @@
-.app__works {
-  flex: 1;
-  width: 100%;
-  flex-direction: column;
+/* ======================================
+   PROJECTS — FILTERABLE GRID
+   ====================================== */
+#projects{background:var(--parchment2)}
+
+.proj-head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:40px;margin-bottom:44px;
+}
+.pfilters{display:flex;gap:8px;flex-wrap:wrap}
+.pf{
+  padding:7px 18px;border-radius:100px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:11.5px;font-weight:600;
+  cursor:pointer;border:1.5px solid var(--parchment3);
+  color:var(--ink3);background:transparent;
+  transition:all .2s;
+  &.on,&:hover{border-color:var(--emerald);color:var(--emerald);background:var(--em-lt)}
 }
 
-.app__work-filter {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: wrap;
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 
-  margin: 4rem 0 2rem;
-
-  .app__work-filter-item {
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    background-color: #fff;
-    color: #000;
-    font-weight: 800;
-
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 0.5rem;
-
-    &:hover {
-      background-color: var(--secondary-color);
-      color: #fff;
-    }
-
-    @media screen and (min-width: 2000px) {
-      padding: 1rem 2rem;
-      border-radius: 0.85rem;
-    }
+.pcard{
+  background:var(--white);
+  border:1.5px solid var(--parchment3);
+  border-radius:var(--r3);overflow:hidden;
+  display:flex;flex-direction:column;cursor:pointer;
+  transition:transform .35s var(--ease),box-shadow .35s,border-color .3s;
+  position:relative;
+  &:hover{transform:translateY(-6px);box-shadow:0 24px 56px rgba(0,0,0,.09);border-color:var(--emerald)}
+  &.hidden{display:none}
+  /* sweep shimmer */
+  &::before{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(108deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);
+    transform:translateX(-100%);transition:transform .55s var(--ease);
+    pointer-events:none;z-index:2;
   }
-
-  .item-active {
-    background-color: var(--secondary-color);
-    color: #fff;
-  }
+  &:hover::before{transform:translateX(120%)}
 }
 
-.app__work-portfolio {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+/* ---- Project image ---- */
+.pc-img{
+  position:relative;
+  height:210px;
+  overflow:hidden;
+  background:var(--parchment3);
 
-  .app__work-item {
-    width: 270px;
-    flex-direction: column;
+  img{
+    width:100%;height:100%;
+    object-fit:cover;
+    transition:transform .5s var(--ease);
+  }
 
-    margin: 2rem;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    background-color: #fff;
-    color: #000;
-
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover {
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
-    }
-
-    @media screen and (min-width: 2000px) {
-      width: 470px;
-      padding: 1.25rem;
-      border-radius: 0.75rem;
-    }
-
-    @media screen and (max-width: 300px) {
-      width: 100%;
-      margin: 1rem;
-    }
+  .pc-cat{
+    position:absolute;top:14px;left:14px;z-index:1;
+  }
+  .pc-yr{
+    position:absolute;top:16px;right:16px;z-index:1;
   }
 }
+.pcard:hover .pc-img img{transform:scale(1.06)}
 
-.app__work-img {
-  width: 100%;
-  height: 230px;
-
-  position: relative;
-  //  transition: all 10s ease;
-
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 0.5rem;
-    object-fit: cover;
-    // transform: translateY(-100%);
-  }
-
-  @media screen and (min-width: 2000px) {
-    height: 350px;
-  }
+.pc-cat{
+  font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;
+  padding:4px 12px;border-radius:100px;
+  background:var(--em-lt);color:var(--emerald);
+  border:1px solid rgba(5,150,105,.2);
+}
+.pc-yr{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink4);
+  background:rgba(255,255,255,.85);padding:2px 10px;border-radius:100px;
 }
 
-.app__work-hover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-
-  border-radius: 0.5rem;
-  opacity: 0;
-  transition: all 0.3s ease;
-
-  div {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
-
-    margin: 1rem;
-    font-family: var(--font-base);
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    svg {
-      width: 50%;
-      height: 50%;
-      color: var(--white-color);
-    }
+.pc-body{padding:18px 22px 16px;flex:1}
+.pc-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:20px;font-weight:700;color:var(--ink);
+  line-height:1.2;letter-spacing:-.01em;margin-bottom:8px;
+}
+.pc-desc{font-size:13.5px;color:var(--ink2);line-height:1.75}
+.pc-foot{
+  padding:14px 22px;border-top:1px solid var(--parchment3);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.pc-tags{display:flex;flex-wrap:wrap;gap:5px}
+.pc-tag{font-size:11px;padding:2px 9px;border-radius:4px;background:var(--parchment2);color:var(--ink3)}
+.pc-links{display:flex;gap:12px;align-items:center}
+.pc-link{
+  font-size:12px;font-weight:700;color:var(--emerald);
+  text-decoration:none;display:flex;align-items:center;gap:5px;
+  letter-spacing:.03em;transition:gap .2s,color .2s;
+  font-family:'DM Mono',monospace;white-space:nowrap;
+  &:hover{gap:9px}
+  &--code{
+    color:var(--ink3);
+    &:hover{color:var(--emerald);gap:9px}
   }
 }
 
-.app__work-content {
-  padding: 0.5rem;
-  width: 100%;
-  position: relative;
-  flex-direction: column;
-
-  h4 {
-    margin-top: 1rem;
-    line-height: 1.5;
-
-    @media screen and (min-width: 2000px) {
-      margin-top: 3rem;
-    }
-  }
-
-  .app__work-tag {
-    position: absolute;
-
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    background-color: #fff;
-    top: -25px;
-  }
+@media(max-width:1024px){
+  .proj-grid{grid-template-columns:1fr}
+  .proj-head{flex-direction:column;align-items:flex-start}
+  .pc-img{height:220px}
 }

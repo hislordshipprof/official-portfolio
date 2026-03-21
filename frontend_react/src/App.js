@@ -1,37 +1,43 @@
 import React from 'react';
 import {
-  About,
-  Work,
-  Testimonial,
   Header,
+  MarqueeBand,
+  About,
   Experience,
-  Education,
+  Skills,
+  Work,
+  Metrics,
   Certifications,
-  GitHub,
-  SkillsRadar,
-  DeveloperMetrics,
-  CallToAction
-} from './container'
-
+  Testimonial,
+  Contact,
+  Footer
+} from './container';
 import Navbar from './components/Navbar/Navbar';
-import "./App.scss";
+import CustomCursor from './components/CustomCursor/CustomCursor';
+import useScrollReveal from './hooks/useScrollReveal';
+import useCounter from './hooks/useCounter';
+import './App.scss';
 
 function App() {
+  useScrollReveal();
+  useCounter();
+
   return (
-    <div className="app">
+    <>
+      <CustomCursor />
       <Navbar />
       <Header />
+      <MarqueeBand />
       <About />
       <Experience />
-      {/* <Education /> */}
-      <Certifications />
-      <SkillsRadar />
-      <GitHub />
-      <DeveloperMetrics />
+      <Skills />
       <Work />
+      <Metrics />
+      <Certifications />
       <Testimonial />
-      <CallToAction />
-    </div>
+      <Contact />
+      <Footer />
+    </>
   );
 }
 
