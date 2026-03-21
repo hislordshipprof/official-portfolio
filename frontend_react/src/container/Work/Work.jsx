@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { client, urlFor } from '../../clients';
 import './Work.scss';
 
@@ -43,6 +43,22 @@ const delays = ['', 'd1', 'd2'];
 const Work = () => {
   const [active, setActive] = useState('all');
   const [projects, setProjects] = useState([]);
+
+  /* Radial glow on project cards */
+  useEffect(() => {
+    const cards = document.querySelectorAll('.pcard');
+    const handlers = [];
+    cards.forEach(card => {
+      const handler = (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--gx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+        card.style.setProperty('--gy', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+      };
+      card.addEventListener('mousemove', handler);
+      handlers.push({ card, handler });
+    });
+    return () => handlers.forEach(({ card, handler }) => card.removeEventListener('mousemove', handler));
+  });
 
   useEffect(() => {
     let mounted = true;

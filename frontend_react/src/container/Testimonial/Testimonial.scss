@@ -11,6 +11,7 @@
   font-style:italic;font-weight:300;
   color:rgba(255,255,255,.82);line-height:1.8;
   margin-bottom:32px;position:relative;
+  animation:quote-fade .5s var(--ease);
   &::before{
     content:'"';
     font-size:180px;
@@ -24,6 +25,7 @@
   font-family:'DM Mono',monospace;
   font-size:12px;letter-spacing:.15em;
   color:rgba(255,255,255,.3);text-transform:uppercase;
+  animation:quote-fade .5s .1s var(--ease) both;
   strong{
     display:block;
     font-size:14px;color:#6EE7B7;
@@ -36,13 +38,19 @@
   display:flex;align-items:center;justify-content:center;
   gap:16px;margin-top:32px;
 }
+@keyframes quote-fade{
+  0%{opacity:0;transform:translateY(8px)}
+  100%{opacity:1;transform:translateY(0)}
+}
+
 .testi-btn{
   background:none;border:1px solid rgba(255,255,255,.15);
   color:rgba(255,255,255,.5);
   width:38px;height:38px;border-radius:50%;
   font-size:16px;cursor:pointer;
-  transition:all .2s;
-  &:hover{border-color:#6EE7B7;color:#6EE7B7}
+  transition:all .25s var(--ease);
+  &:hover{border-color:#6EE7B7;color:#6EE7B7;transform:scale(1.1);box-shadow:0 0 12px rgba(110,231,183,.2)}
+  &:active{transform:scale(.95)}
 }
 .testi-count{
   font-family:'DM Mono',monospace;font-size:11px;

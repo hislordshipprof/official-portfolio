@@ -27,14 +27,14 @@ const About = () => {
           <div className="bc bc-bio rv">
             <div className="bc-label">Background</div>
             <div className="bc-bio-body">
-              <p>I'm <strong>Benjamin Agyekum</strong> — a Full-Stack Engineer and AI Developer who cares deeply about every layer of the product. I've shipped production applications for startups across California, San Francisco, and globally distributed teams, collectively impacting over <strong>500,000 users</strong>.</p>
+              <p>I'm <strong>Benjamin</strong> — a Full-Stack Engineer and AI Developer who cares deeply about every layer of the product. I've shipped production applications for startups across California, San Francisco, and globally distributed teams, collectively impacting over <strong>500,000 users</strong>.</p>
               <p>My superpower is <strong>connecting design, engineering and AI</strong> — building experiences that genuinely move the needle. From architecting cloud infrastructure to integrating cutting-edge LLM pipelines, I bring a holistic and detail-driven approach to every problem I take on.</p>
             </div>
           </div>
 
           <div className="bc bc-card rv d1">
             <div className="bc-avatar">👨🏾‍💻</div>
-            <div className="bc-name">Benjamin Agyekum</div>
+            <div className="bc-name">Benjamin</div>
             <div className="bc-role-title">Full Stack · AI Specialist · EdTech · DevSecOps</div>
             <div className="bc-status">Available for new projects</div>
             <div className="bc-tags">

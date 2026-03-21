@@ -35,10 +35,10 @@ const Testimonial = () => {
   return (
     <section id="testimonial">
       <div className="testi-inner rv">
-        <div className="testi-quote">
+        <div className="testi-quote" key={idx}>
           "{current.feedback}"
         </div>
-        <div className="testi-author">
+        <div className="testi-author" key={`a-${idx}`}>
           <strong>{current.name}</strong>
           {current.company}
         </div>

@@ -19,7 +19,9 @@
   position:relative;
   &:last-child{border-bottom:1px solid var(--parchment3)}
   &:hover .tl-spine{background:var(--emerald)}
-  &:hover .tl-spine::before{border-color:var(--emerald);background:var(--emerald)}
+  &:hover .tl-spine::before{border-color:var(--emerald);background:var(--emerald);box-shadow:0 0 10px var(--emerald);transform:translateX(-50%) scale(1.3)}
+  &:hover .tl-body{transform:translateX(6px)}
+  &:hover .tl-meta{transform:translateX(-4px)}
 }
 
 .tl-spine{
@@ -30,12 +32,12 @@
     top:0;left:50%;transform:translateX(-50%);
     width:11px;height:11px;border-radius:50%;
     background:var(--parchment);border:2px solid var(--parchment3);
-    transition:border-color .3s,background .3s;
+    transition:border-color .3s,background .3s,transform .3s,box-shadow .3s;
     z-index:1;
   }
 }
 
-.tl-meta{padding-right:4px}
+.tl-meta{padding-right:4px;transition:transform .4s var(--ease)}
 .tl-period{
   font-family:'DM Mono',monospace;
   font-size:10.5px;letter-spacing:.08em;
@@ -52,7 +54,7 @@
   border:1px solid rgba(5,150,105,.2);
 }
 
-.tl-body{padding-left:6px}
+.tl-body{padding-left:6px;transition:transform .4s var(--ease)}
 .tl-title{
   font-family:'Cormorant Garamond',serif;
   font-size:26px;font-weight:700;
