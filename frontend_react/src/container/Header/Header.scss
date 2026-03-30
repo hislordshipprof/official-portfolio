@@ -284,3 +284,16 @@
   .hero-sub{flex-direction:column;align-items:flex-start;gap:28px}
   .hero-tech-row{margin-top:16px}
 }
+@media(max-width:640px){
+  .code-particle{display:none}
+  #hero{justify-content:flex-start;padding:calc(var(--nav-h) + 24px) 0 48px;min-height:auto}
+  .hero-chip{margin-bottom:20px;font-size:9.5px;padding:6px 14px}
+  .hero-word{font-size:clamp(38px,12vw,52px)}
+  .hero-tech-row{gap:6px;margin-top:12px}
+  .tech-pill{font-size:9px;padding:4px 10px}
+  .hero-sub{margin-top:28px;gap:20px}
+  .hero-desc{font-size:14px;line-height:1.7;max-width:100%;padding-left:14px}
+  .hero-btns{width:100%}
+  .btn-ink,.btn-ghost{padding:12px 22px;font-size:12px;flex:1;justify-content:center}
+  .hero-scroll{display:none}
+}

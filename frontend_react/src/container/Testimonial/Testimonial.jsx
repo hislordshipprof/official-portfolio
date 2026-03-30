@@ -3,7 +3,7 @@ import { client } from '../../clients';
 import './Testimonial.scss';
 
 const fallback = {
-  feedback: "His attention to detail is incredible. He has proven to be very innovative and will work with ideas that I have as well — thinking of new ways to bring more traffic to our site in ways I would never have considered. His pricing is unique and logical, saving me money and achieving measurable results at the same time.",
+  feedback: "His attention to detail is incredible. He has proven to be very innovative and will work with ideas that I have as well, thinking of new ways to bring more traffic to our site in ways I would never have considered. His pricing is unique and logical, saving me money and achieving measurable results at the same time.",
   name: 'Lawrence',
   company: 'Arizona State College',
 };

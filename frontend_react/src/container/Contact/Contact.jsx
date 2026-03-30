@@ -49,7 +49,7 @@ const Contact = () => {
       <div className="wrap">
         <p className="s-label rv">Get In Touch</p>
         <h2 className="s-head rv">Let's Build Something <em>Amazing</em></h2>
-        <p className="s-body rv">Whether you need a full-stack developer, AI specialist, or technical consultant — I'm ready to bring your vision to life.</p>
+        <p className="s-body rv">Whether you need a full-stack developer, AI specialist, or technical consultant, I'm ready to bring your vision to life.</p>
         <div className="contact-grid">
           <div className="rv">
             <div className="c-detail">
@@ -68,7 +68,7 @@ const Contact = () => {
               </a>
               <a href="https://github.com/hislordshipprof" target="_blank" rel="noreferrer" className="c-lnk">
                 <span className="c-lnk-ico">⌨️</span>
-                <div><div className="c-lnk-name">GitHub — 66 Public Repos</div><div className="c-lnk-sub">Explore my repositories</div></div>
+                <div><div className="c-lnk-name">GitHub · 66 Public Repos</div><div className="c-lnk-sub">Explore my repositories</div></div>
                 <span className="c-arr">→</span>
               </a>
               <a href="https://www.linkedin.com/in/bagyekum" target="_blank" rel="noreferrer" className="c-lnk">

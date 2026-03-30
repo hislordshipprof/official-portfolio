@@ -29,7 +29,7 @@ const fallbackExperiences = [
     period: 'Mar 2017 – Oct 2020', company: 'Teamally.com', location: 'Remote',
     title: 'Full-Stack Developer',
     highlights: [
-      'Built production platforms across logistics, finance, social media and coworking — impacting 5,000+ users.',
+      'Built production platforms across logistics, finance, social media and coworking, impacting 5,000+ users.',
       'Achieved 90+ Lighthouse scores and sub-second Time to Interactive via Next.js, Node.js and Django.',
     ],
     win: '5,000+ users impacted across industries',
@@ -106,7 +106,7 @@ const Experience = () => {
             <h2 className="s-head rv">Professional <em>Journey</em></h2>
           </div>
           <p className="s-body rv" style={{ maxWidth: 300, textAlign: 'right' }}>
-            A track record of innovation across global teams — from startup to enterprise.
+            A track record of innovation across global teams, from startup to enterprise.
           </p>
         </div>
         <div className="timeline">

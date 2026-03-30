@@ -27,8 +27,8 @@ const About = () => {
           <div className="bc bc-bio rv">
             <div className="bc-label">Background</div>
             <div className="bc-bio-body">
-              <p>I'm <strong>Benjamin</strong> — a Full-Stack Engineer and AI Developer who cares deeply about every layer of the product. I've shipped production applications for startups across California, San Francisco, and globally distributed teams, collectively impacting over <strong>500,000 users</strong>.</p>
-              <p>My superpower is <strong>connecting design, engineering and AI</strong> — building experiences that genuinely move the needle. From architecting cloud infrastructure to integrating cutting-edge LLM pipelines, I bring a holistic and detail-driven approach to every problem I take on.</p>
+              <p>I'm <strong>Benjamin</strong>, a Full-Stack Engineer and AI Developer who cares deeply about every layer of the product. I've shipped production applications for startups across California, San Francisco, and globally distributed teams, collectively impacting over <strong>500,000 users</strong>.</p>
+              <p>My superpower is <strong>connecting design, engineering and AI</strong>, building experiences that genuinely move the needle. From architecting cloud infrastructure to integrating cutting-edge LLM pipelines, I bring a holistic and detail-driven approach to every problem I take on.</p>
             </div>
           </div>
 
@@ -47,7 +47,7 @@ const About = () => {
           <div className="bc bc-role rv d1">
             <div className="bc-role-icon">⚙️</div>
             <div className="bc-role-name">Full-Stack Engineer</div>
-            <div className="bc-role-desc">React, Next.js, Node.js &amp; Python — end-to-end production delivery.</div>
+            <div className="bc-role-desc">React, Next.js, Node.js &amp; Python. End-to-end production delivery.</div>
           </div>
           <div className="bc bc-role rv d2">
             <div className="bc-role-icon">🤖</div>
@@ -81,9 +81,9 @@ const About = () => {
 
           <div className="bc bc-testi rv">
             <div className="bc-quote">
-              "His attention to detail is incredible. He has proven to be very innovative and will work with ideas that I have as well — thinking of new ways to bring more traffic to our site in ways I would never have considered."
+              "His attention to detail is incredible. He has proven to be very innovative and will work with ideas that I have as well, thinking of new ways to bring more traffic to our site in ways I would never have considered."
             </div>
-            <div className="bc-author">— Lawrence · Arizona State College</div>
+            <div className="bc-author">Lawrence · Arizona State College</div>
           </div>
         </div>
       </div>

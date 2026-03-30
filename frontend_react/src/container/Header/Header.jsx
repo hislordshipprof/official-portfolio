@@ -251,7 +251,7 @@ const Header = () => {
 
         <div className="hero-sub">
           <p className="hero-desc">
-            I architect and ship <strong>full-stack digital products</strong> — from AI-powered
+            I architect and ship <strong>full-stack digital products</strong>, from AI-powered
             learning platforms to blockchain apps, scalable cloud backends and pixel-perfect
             interfaces. <strong>47+ projects &middot; 500K+ users &middot; 5+ years</strong>
           </p>
